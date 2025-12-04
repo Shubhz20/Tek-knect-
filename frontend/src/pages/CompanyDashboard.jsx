@@ -15,10 +15,10 @@ const CompanyDashboard = () => {
             return;
         }
 
-        // Fetch dashboard data
+       
         const fetchData = async () => {
             try {
-                const res = await fetch('http://localhost:5001/api/dashboard/company', {
+                const res = await fetch('/api/dashboard/company', {
                     headers: { 'x-auth-token': token }
                 });
                 const result = await res.json();

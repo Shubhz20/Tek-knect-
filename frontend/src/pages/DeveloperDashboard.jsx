@@ -24,7 +24,7 @@ const DeveloperDashboard = () => {
         // Fetch dashboard data
         const fetchData = async () => {
             try {
-                const res = await fetch('http://localhost:5001/api/dashboard/developer', {
+                const res = await fetch('/api/dashboard/developer', {
                     headers: { 'x-auth-token': token }
                 });
                 const result = await res.json();
