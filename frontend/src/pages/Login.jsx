@@ -6,8 +6,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
-        password: '',
-        role: 'developer' // Default role
+        password: ''
     });
 
     const handleChange = (e) => {
@@ -67,18 +66,6 @@ const Login = () => {
                     className="input-cyber"
                     required
                 />
-            </div>
-            <div>
-                <label className="block text-gray-400 text-sm mb-2 font-orbitron">Role</label>
-                <select
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                    className="input-cyber"
-                >
-                    <option value="developer">Developer</option>
-                    <option value="company">Company</option>
-                </select>
             </div>
         </AuthForm>
     );

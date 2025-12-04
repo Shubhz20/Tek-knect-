@@ -54,7 +54,7 @@ router.post('/register', async (req, res) => {
 
 // Login
 router.post('/login', async (req, res) => {
-    const { email, password, role } = req.body;
+    const { email, password } = req.body;
 
     try {
         let user = users.find(u => u.email === email);
@@ -62,10 +62,10 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ msg: 'Invalid Credentials' });
         }
 
-        // Check role match
-        if (user.role !== role) {
-            return res.status(400).json({ msg: 'Invalid Role for this user' });
-        }
+        // Role check removed to allow login by email only
+        // if (user.role !== role) {
+        //     return res.status(400).json({ msg: 'Invalid Role for this user' });
+        // }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
