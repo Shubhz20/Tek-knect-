@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-darkBg text-white font-inter overflow-x-hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-orbitron;
+  }
+}
+
+@layer components {
+  .btn-cyber {
+    @apply px-6 py-3 bg-transparent border-2 border-neonBlue text-neonBlue font-orbitron font-bold uppercase tracking-wider hover:bg-neonBlue hover:text-black transition-all duration-300 shadow-[0_0_10px_rgba(0,243,255,0.5)] hover:shadow-[0_0_20px_rgba(0,243,255,0.8)];
+  }
+  
+  .card-cyber {
+    @apply bg-cyberGray border border-gray-800 p-6 rounded-lg hover:border-neonBlue transition-colors duration-300;
+  }
+
+  .input-cyber {
+    @apply w-full bg-black border border-gray-700 p-3 text-white focus:border-neonBlue focus:outline-none transition-colors duration-300 rounded;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00f3ff;
+}
