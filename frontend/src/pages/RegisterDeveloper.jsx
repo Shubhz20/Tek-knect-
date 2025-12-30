@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+// import { jwtDecode } from "jwt-decode";
 import AuthForm from '../components/AuthForm';
 
 const RegisterDeveloper = () => {
@@ -19,6 +20,39 @@ const RegisterDeveloper = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         setError(''); // Clear error on input change
+    };
+
+    const handleGoogleSuccess = async (credentialResponse) => {
+        try {
+            // Send token to backend for verification
+            const response = await fetch('/api/auth/google-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ token: credentialResponse.credential })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('role', data.role);
+                setTimeout(() => {
+                    navigate('/dashboard/developer');
+                }, 100);
+            } else {
+                setError(data.msg || 'Google Sign Up failed');
+            }
+        } catch (err) {
+            console.error('Google Auth Error:', err);
+            setError('Google Auth Failed');
+        }
+    };
+
+    const handleGoogleError = () => {
+        console.log('Google Login Failed');
+        setError('Google Sign Up Failed');
     };
 
     const handleSubmit = async (e) => {
@@ -56,7 +90,13 @@ const RegisterDeveloper = () => {
     };
 
     return (
-        <AuthForm title="DEVELOPER ACCESS" type="register" onSubmit={handleSubmit}>
+        <AuthForm 
+            title="DEVELOPER ACCESS" 
+            type="register" 
+            onSubmit={handleSubmit}
+            onGoogleSuccess={handleGoogleSuccess}
+            onGoogleError={handleGoogleError}
+        >
             {error && (
                 <div className="bg-red-500/10 border border-red-500 text-red-500 p-3 rounded text-sm text-center mb-4">
                     {error}

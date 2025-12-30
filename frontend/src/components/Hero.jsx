@@ -34,12 +34,23 @@ const Hero = () => {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6"
                 >
-                    <Link to="/register/developer" className="btn-cyber">
-                        Join as Developer
-                    </Link>
-                    <Link to="/register/company" className="px-6 py-3 border border-gray-600 text-gray-300 font-orbitron font-bold uppercase tracking-wider hover:border-white hover:text-white transition-all duration-300">
-                        Join as Company
-                    </Link>
+                    {localStorage.getItem('token') ? (
+                        <Link 
+                            to={localStorage.getItem('role') === 'developer' ? '/dashboard/developer' : '/dashboard/company'} 
+                            className="btn-cyber"
+                        >
+                            Go to Dashboard
+                        </Link>
+                    ) : (
+                        <>
+                            <Link to="/register/developer" className="btn-cyber">
+                                Join as Developer
+                            </Link>
+                            <Link to="/register/company" className="px-6 py-3 border border-gray-600 text-gray-300 font-orbitron font-bold uppercase tracking-wider hover:border-white hover:text-white transition-all duration-300">
+                                Join as Company
+                            </Link>
+                        </>
+                    )}
                 </motion.div>
             </div>
         </section>

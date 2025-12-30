@@ -9,7 +9,6 @@ import krishJainImg from '../assets/images/krish-jain.jpg';
 const Home = () => {
     const founders = [
         { name: "Harshit Agrawal", role: "Co-Founder", img: harshitAgrawalImg },
-        { name: "Harshit Gupta", role: "Co-Founder", img: null },
         { name: "Krish Jain", role: "Co-Founder", img: krishJainImg }
     ];
 

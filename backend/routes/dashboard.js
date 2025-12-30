@@ -3,6 +3,8 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+const nodemailer = require('nodemailer');
+
 // Middleware to verify token
 const auth = (req, res, next) => {
     const token = req.header('x-auth-token');
@@ -16,6 +18,65 @@ const auth = (req, res, next) => {
         res.status(400).json({ msg: 'Token is not valid' });
     }
 };
+
+// ... (existing routes)
+
+// Join Meeting & Send Email
+router.post('/join-meeting', auth, async (req, res) => {
+    const { meetingTitle } = req.body;
+    
+    // Hardcoded meeting links for now
+    const meetingLinks = {
+        "Introduction to System Design": "https://meet.google.com/abc-defg-hij",
+        "GSoC 2025 Kickoff": "https://meet.google.com/xyz-uvwx-yz",
+        "ICPC Strategy Session": "https://meet.google.com/lmn-opqr-stu"
+    };
+
+    const meetingLink = meetingLinks[meetingTitle] || "https://meet.google.com/default-link";
+
+    try {
+        // Fetch user email from DB since token might not contain it if not refreshed or if structure changed
+        // Actually, let's use the in-memory 'users' array from auth.js if possible, but they are in different files.
+        // Since we don't have a shared DB module yet (mock mode), I'll import the user list or use the User model if connected.
+        // Wait, User model is Mongoose, but we are using in-memory in auth.js. 
+        // This file imports 'User' model (Mongoose) but auth.js uses 'users' array. 
+        // This is a disconnect. I should probably use the same 'users' array if possible or fix the architecture.
+        // However, given the current state, auth.js exports the router, not the users array.
+        // I'll stick to 'mock' behavior where I trust the request or rely on a shared store if I can found one.
+        // BUT, I can pass the email from the frontend for now to simplify, as the user is logged in.
+        
+        const userEmail = req.body.userEmail; // Expect frontend to send email for now given the mock backend split
+
+        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+             console.log(`[Mock Email] To: ${userEmail}, Subject: Meeting Link for ${meetingTitle}, Link: ${meetingLink}`);
+             return res.json({ msg: 'Email sent (Mock mode - Check server logs)' });
+        }
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: userEmail,
+            subject: `Meeting Link: ${meetingTitle} - Tek'knect`,
+            text: `Hello,\n\nYou have successfully registered for "${meetingTitle}".\n\nSee you there! Here is the meeting link: ${meetingLink}\n\nBest regards,\nTeam Tek'knect`
+        };
+
+        await transporter.sendMail(mailOptions);
+        res.json({ msg: 'Meeting link sent to your email!' });
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error sending email');
+    }
+});
+
+module.exports = router;
 
 // Developer Dashboard Data
 router.get('/developer', auth, async (req, res) => {

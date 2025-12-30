@@ -6,6 +6,7 @@ import RegisterDeveloper from './pages/RegisterDeveloper';
 import RegisterCompany from './pages/RegisterCompany';
 import DeveloperDashboard from './pages/DeveloperDashboard';
 import CompanyDashboard from './pages/CompanyDashboard';
+import Profile from './pages/Profile';
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/register/company" element={<RegisterCompany />} />
                 <Route path="/dashboard/developer" element={<DeveloperDashboard />} />
                 <Route path="/dashboard/company" element={<CompanyDashboard />} />
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </Router>
     );

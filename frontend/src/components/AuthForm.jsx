@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { GoogleLogin } from '@react-oauth/google';
 
-const AuthForm = ({ title, type, onSubmit, children }) => {
+const AuthForm = ({ title, type, onSubmit, children, onGoogleSuccess, onGoogleError }) => {
     return (
         <div className="min-h-screen bg-darkBg flex items-center justify-center relative overflow-hidden">
             {/* Background Elements */}
@@ -25,6 +26,28 @@ const AuthForm = ({ title, type, onSubmit, children }) => {
                         {type === 'login' ? 'Login' : 'Register'}
                     </button>
                 </form>
+ 
+                 {onGoogleSuccess && (
+                     <div className="mt-6">
+                         <div className="relative mb-6">
+                             <div className="absolute inset-0 flex items-center">
+                                 <div className="w-full border-t border-gray-600"></div>
+                             </div>
+                             <div className="relative flex justify-center text-sm">
+                                 <span className="px-2 bg-cyberGray text-gray-400">Or continue with</span>
+                             </div>
+                         </div>
+                         <div className="flex justify-center">
+                             <GoogleLogin
+                                 onSuccess={onGoogleSuccess}
+                                 onError={onGoogleError}
+                                 theme="filled_black"
+                                 shape="pill"
+                                 width="100%"
+                             />
+                         </div>
+                     </div>
+                 )}
 
                 <div className="mt-6 text-center text-gray-400 text-sm">
                     {type === 'login' ? (

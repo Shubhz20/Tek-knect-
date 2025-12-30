@@ -26,11 +26,20 @@ const UserSchema = new mongoose.Schema({
     yearOfStudy: {
         type: String
     },
+    course: {
+        type: String
+    },
     contactNumber: {
         type: String
     },
     // Company specific fields
     companyName: {
+        type: String
+    },
+    designation: {
+        type: String
+    },
+    workingSince: {
         type: String
     },
     // Common fields

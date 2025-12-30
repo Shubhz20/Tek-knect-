@@ -10,16 +10,42 @@ const Navbar = () => {
                 </Link>
                 <div className="flex items-center space-x-8">
                     <Link to="/" className="text-gray-300 hover:text-neonBlue transition-colors font-inter text-sm uppercase tracking-wide">Home</Link>
-                    <a href="#about" className="text-gray-300 hover:text-neonBlue transition-colors font-inter text-sm uppercase tracking-wide">About</a>
-                    <a href="#features" className="text-gray-300 hover:text-neonBlue transition-colors font-inter text-sm uppercase tracking-wide">Features</a>
-                    <a href="#founders" className="text-gray-300 hover:text-neonBlue transition-colors font-inter text-sm uppercase tracking-wide">Founders</a>
+                    <a href="/#about" className="text-gray-300 hover:text-neonBlue transition-colors font-inter text-sm uppercase tracking-wide">About</a>
+                    <a href="/#features" className="text-gray-300 hover:text-neonBlue transition-colors font-inter text-sm uppercase tracking-wide">Features</a>
+                    <a href="/#founders" className="text-gray-300 hover:text-neonBlue transition-colors font-inter text-sm uppercase tracking-wide">Founders</a>
                     <div className="flex space-x-4">
-                        <Link to="/login" className="px-4 py-2 border border-neonBlue text-neonBlue font-orbitron text-sm hover:bg-neonBlue hover:text-black transition-all duration-300">
-                            Login
-                        </Link>
-                        <Link to="/register/developer" className="px-4 py-2 bg-neonBlue text-black font-orbitron text-sm hover:bg-white transition-all duration-300">
-                            Join
-                        </Link>
+                        {localStorage.getItem('token') ? (
+                             <div className="flex items-center space-x-4">
+                                <Link 
+                                    to={localStorage.getItem('role') === 'developer' ? '/dashboard/developer' : '/dashboard/company'}
+                                    className="text-gray-300 hover:text-neonBlue transition-colors font-inter text-sm uppercase tracking-wide"
+                                >
+                                    Dashboard
+                                </Link>
+                                <Link to="/profile" className="px-4 py-2 border border-neonBlue text-neonBlue font-orbitron text-sm hover:bg-neonBlue hover:text-black transition-all duration-300">
+                                    Profile
+                                </Link>
+                                <button 
+                                    onClick={() => {
+                                        localStorage.removeItem('token');
+                                        localStorage.removeItem('role');
+                                        window.location.href = '/';
+                                    }}
+                                    className="text-gray-400 hover:text-white font-inter text-sm"
+                                >
+                                    Logout
+                                </button>
+                             </div>
+                        ) : (
+                            <>
+                                <Link to="/login" className="px-4 py-2 border border-neonBlue text-neonBlue font-orbitron text-sm hover:bg-neonBlue hover:text-black transition-all duration-300">
+                                    Login
+                                </Link>
+                                <Link to="/register/developer" className="px-4 py-2 bg-neonBlue text-black font-orbitron text-sm hover:bg-white transition-all duration-300">
+                                    Join
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
