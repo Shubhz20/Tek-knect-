@@ -19,7 +19,7 @@ const auth = (req, res, next) => {
     }
 };
 
-// ... (existing routes)
+
 
 // Join Meeting & Send Email
 router.post('/join-meeting', auth, async (req, res) => {
@@ -35,17 +35,9 @@ router.post('/join-meeting', auth, async (req, res) => {
     const meetingLink = meetingLinks[meetingTitle] || "https://meet.google.com/default-link";
 
     try {
-        // Fetch user email from DB since token might not contain it if not refreshed or if structure changed
-        // Actually, let's use the in-memory 'users' array from auth.js if possible, but they are in different files.
-        // Since we don't have a shared DB module yet (mock mode), I'll import the user list or use the User model if connected.
-        // Wait, User model is Mongoose, but we are using in-memory in auth.js. 
-        // This file imports 'User' model (Mongoose) but auth.js uses 'users' array. 
-        // This is a disconnect. I should probably use the same 'users' array if possible or fix the architecture.
-        // However, given the current state, auth.js exports the router, not the users array.
-        // I'll stick to 'mock' behavior where I trust the request or rely on a shared store if I can found one.
-        // BUT, I can pass the email from the frontend for now to simplify, as the user is logged in.
+       
         
-        const userEmail = req.body.userEmail; // Expect frontend to send email for now given the mock backend split
+        const userEmail = req.body.userEmail;
 
         if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
              console.log(`[Mock Email] To: ${userEmail}, Subject: Meeting Link for ${meetingTitle}, Link: ${meetingLink}`);
