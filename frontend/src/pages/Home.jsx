@@ -155,7 +155,6 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Footer */}
             <footer className="py-12 border-t border-gray-800 bg-black text-center">
                 <div className="mb-8">
                     <span className="text-2xl font-orbitron font-bold text-white tracking-wider">

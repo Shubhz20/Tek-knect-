@@ -115,17 +115,14 @@ const Profile = () => {
                             <span className="mt-2 px-3 py-1 bg-neonBlue/10 text-neonBlue text-xs rounded-full uppercase tracking-wider">{user?.role}</span>
                         </div>
 
-                        {/* Right Column: Edit Form or View Details */}
+                        {}
                         <div className="w-full md:w-2/3">
                             <form onSubmit={handleSubmit} className="space-y-6">
-                                {/* Basic Details Section */}
                                 <div className="space-y-4">
                                     <h3 className="text-neonBlue font-orbitron text-lg border-b border-gray-700 pb-2">Basic Details</h3>
                                     
                                     <div className="grid grid-cols-1 gap-4">
-                                        {/* Name & Email are typically read-only for Google users, but editable otherwise. 
-                                            User requested "keep it empty and give space to fill" for college if Google login.
-                                        */}
+                    
                                         <div>
                                             <label className="block text-gray-400 text-sm mb-1 font-orbitron">Full Name</label>
                                             <input 
@@ -149,7 +146,6 @@ const Profile = () => {
                                     </div>
                                 </div>
 
-                                {/* Academic / Professional Details */}
                                 <div className="space-y-4">
                                     <h3 className="text-neonBlue font-orbitron text-lg border-b border-gray-700 pb-2">
                                         {user.role === 'developer' ? 'Academic Information' : 'Company Details'}
@@ -257,7 +253,7 @@ const Profile = () => {
                                         <button 
                                             type="button" 
                                             onClick={() => {
-                                                setFormData(user); // Reset changes
+                                                setFormData(user); 
                                                 setIsEditing(false);
                                             }} 
                                             className="flex-1 px-4 py-2 border border-gray-600 text-gray-300 hover:bg-gray-800 transition-all font-orbitron text-sm uppercase tracking-wider"

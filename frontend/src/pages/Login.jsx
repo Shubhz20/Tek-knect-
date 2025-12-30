@@ -30,7 +30,7 @@ const Login = () => {
             if (response.ok) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('role', data.role);
-                // Redirect based on role
+                
                 if (data.role === 'developer') {
                     navigate('/dashboard/developer');
                 } else {
